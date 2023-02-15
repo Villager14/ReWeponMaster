@@ -30,7 +30,7 @@ public class PlayerAtk : MonoBehaviour
     void Start()
     {
         wepon1 = 0;
-        wepon2 = 2;
+        wepon2 = 1;
 
         itemManager.GetComponent<ItemManager>();
     }
@@ -46,12 +46,13 @@ public class PlayerAtk : MonoBehaviour
 
         Atack();
 
-        WeponChange();
+        WeponChange(); 
     }
 
+    //      攻撃時のダメージ
     private void Atack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             int number = Random.Range(0, 100);
 
@@ -72,9 +73,8 @@ public class PlayerAtk : MonoBehaviour
     private void WeponChange()
     {
         //      マウス左クリックを押すと武器を切り替える
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            
             if (weponChange)
             {
                 //      武器１
@@ -96,5 +96,27 @@ public class PlayerAtk : MonoBehaviour
                 weponCritical = itemManager.NowItemCritical(nowWepon);
             }
         }
+    }
+
+    //      アイテムを拾う処理
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Item")
+        {
+            if (Input.GetKey(KeyCode.C))
+            {
+                itemManager.GetWeponNumber(2);
+
+                Destroy(collision.gameObject);
+            }
+        }
+    }
+
+    //      ステータスを受け取る
+    public void SetStatas(int playerLevel, float playerAtk, float playerCritical)
+    {
+        this.playerLevel = playerLevel;
+        this.playerAtk = playerAtk;
+        this.playerCritical = playerCritical;
     }
 }

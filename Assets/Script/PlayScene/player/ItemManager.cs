@@ -20,7 +20,6 @@ public class ItemManager : MonoBehaviour
 
     private int itemEnhancment = 0;                         //      強化するアイテムの番号
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -30,17 +29,18 @@ public class ItemManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            itemEnhancmentJadgement = true;
-        }
+        //      レベルアップ
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    itemEnhancmentJadgement = true;
+        //}
 
         ItemEnhancement();
     }
 
     //      武器の強化
     private void ItemEnhancement()
-    {
+    {   
         if (!itemEnhancmentJadgement) return;
         
         //      乱数を発生させる
@@ -96,6 +96,8 @@ public class ItemManager : MonoBehaviour
                 def[i]          = getdef;
                 critical[i]     = getcritical;
 
+                itemBox[i] = 1;
+
                 //      アイテム選択の初期化
                 itemNumber = -1;
                 return;
@@ -121,4 +123,9 @@ public class ItemManager : MonoBehaviour
         return critical[i];
     }
 
+    //      アイテムを拾ったときの番号
+    public void GetWeponNumber(int i)
+    {
+        itemNumber = i;
+    }
 }
