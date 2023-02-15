@@ -36,8 +36,6 @@ public class ItemManager : MonoBehaviour
         }
 
         ItemEnhancement();
-
-        Debug.Log(atk[itemEnhancment]);
     }
 
     //      武器の強化
@@ -104,4 +102,23 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
+    //      攻撃力を送る
+    public float NowItemATK(int i)
+    {
+        return atk[i] + basic[i];
+    }
+
+    //      名前を送る
+    public string NowItemName(int i)
+    {
+        return WeponName[i];
+    }
+
+    //      クリティカル率を送る
+    public float NowItemCritical(int i)
+    {
+        return critical[i];
+    }
+
 }
