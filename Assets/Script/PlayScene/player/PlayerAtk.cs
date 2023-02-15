@@ -24,6 +24,8 @@ public class PlayerAtk : MonoBehaviour
 
     private float totalCritical = 0f;       //      武器と基礎クリティカル率の合計
 
+    private int playerLevel = 0;            //      プレイヤーの現在レベル
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,16 @@ public class PlayerAtk : MonoBehaviour
 
             if (number < totalCritical) totalAtk *= 2f;
         }
+    }
+
+    public float GetAtack()
+    {
+        return totalAtk;
+    }
+
+    public int GetPlayerLevel()
+    {
+        return playerLevel;
     }
 
     private void WeponChange()
