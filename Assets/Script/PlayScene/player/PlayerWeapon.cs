@@ -6,9 +6,10 @@ using UnityEngine;
 
     public class PlayerWeapon
     {
-        public string name;         //      名前
-        public int atk;             //      攻撃力
-        public int def;             //      防御力
-        public int critical;        //      クリティカル率
+        public string   name;       //      名前
+        public int      Basic;      //      基礎攻撃力
+        public int      atk;        //      攻撃力
+        public int      def;        //      防御力
+        public int      critical;   //      クリティカル率
     }
 

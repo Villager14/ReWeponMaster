@@ -12,6 +12,8 @@ public class CSVProcessing : MonoBehaviour
     //      プレイヤーの武器のステータス
     public PlayerWeapon[] playerWeapons;
 
+    public ItemManager itemManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,13 +28,23 @@ public class CSVProcessing : MonoBehaviour
 
         //      武器のステータスをCSVから受け取る
         PlayerWeapon(textasset);
+
+        itemManager.GetComponent<ItemManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //      データはどこでも呼び出し可能にできる
-        //int a = monsterData[0].ATK;
+
+
+        //      アイテムの初期値を受け取る
+        if (itemManager.GetItemNumber() != -1)
+        {
+            int i = itemManager.GetItemNumber();
+
+            itemManager.GetItem(playerWeapons[i].name, playerWeapons[i].Basic,
+                        playerWeapons[i].atk, playerWeapons[i].def, playerWeapons[i].critical);
+        }
     }
 
     private void EnemyStatas(TextAsset textasset)
