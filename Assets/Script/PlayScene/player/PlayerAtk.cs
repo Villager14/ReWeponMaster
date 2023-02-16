@@ -26,6 +26,8 @@ public class PlayerAtk : MonoBehaviour
 
     private int playerLevel = 0;            //      プレイヤーの現在レベル
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,8 @@ public class PlayerAtk : MonoBehaviour
         wepon2 = 1;
 
         itemManager.GetComponent<ItemManager>();
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -105,7 +109,7 @@ public class PlayerAtk : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.C))
             {
-                itemManager.GetWeponNumber(2);
+                itemManager.SetWeponNumber(2);
 
                 Destroy(collision.gameObject);
             }
@@ -118,5 +122,46 @@ public class PlayerAtk : MonoBehaviour
         this.playerLevel = playerLevel;
         this.playerAtk = playerAtk;
         this.playerCritical = playerCritical;
+    }
+
+
+    private void WeponAtk()
+    {
+        int itemNumber = itemManager.GetWeponNumber(1);
+
+        if (itemNumber < 5)
+        {
+            //      剣
+
+            SordMotion();
+        }
+        else if (itemNumber < 10)
+        {
+            //      弓
+        }
+        else if (itemNumber < 15)
+        {
+
+        }
+        else if (itemNumber < 20)
+        {
+
+        }
+        else if (itemNumber < 25)
+        {
+
+        }
+        else if (itemNumber < 30)
+        {
+
+        }
+    }
+
+    private void SordMotion()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
     }
 }

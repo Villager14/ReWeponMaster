@@ -19,6 +19,7 @@ public class PlayerMoveScript : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rd;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +33,7 @@ public class PlayerMoveScript : MonoBehaviour
 
     }
 
-    private void FixedUpdate()      
+    private void FixedUpdate() 
     {
         Move();
     }
@@ -81,7 +82,7 @@ public class PlayerMoveScript : MonoBehaviour
         if (ranTime > 5f)
         {
             //      移動量にスピードを掛ける(ダッシュ)
-            playerVelocity.x *= playerRanSpeed; 
+            playerVelocity.x *= playerRanSpeed;
             playerVelocity.y *= playerRanSpeed;
         }
         else
@@ -150,4 +151,7 @@ public class PlayerMoveScript : MonoBehaviour
         animator.SetBool("Left",   false);
     }
 
+    private void AtkAnimaTest()
+    {
+    }
 }

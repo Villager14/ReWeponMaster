@@ -96,7 +96,7 @@ public class ItemManager : MonoBehaviour
                 def[i]          = getdef;
                 critical[i]     = getcritical;
 
-                itemBox[i] = 1;
+                itemBox[i] = itemNumber;
 
                 //      アイテム選択の初期化
                 itemNumber = -1;
@@ -124,8 +124,14 @@ public class ItemManager : MonoBehaviour
     }
 
     //      アイテムを拾ったときの番号
-    public void GetWeponNumber(int i)
+    public void SetWeponNumber(int i)
     {
         itemNumber = i;
     }
+
+    public int GetWeponNumber(int i)
+    {
+        return itemBox[i];
+    }
+
 }
