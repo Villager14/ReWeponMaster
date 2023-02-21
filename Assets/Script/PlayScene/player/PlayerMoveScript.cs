@@ -9,11 +9,25 @@ public class PlayerMoveScript : MonoBehaviour
 
     public float playerRanSpeed = 13f;                              //      プレイヤーの走る移動速度
 
-    private Vector2 playerPos = new Vector2(0f,0f);                 //      プレイヤーの現在位置
+    private Vector2 playerPos = new Vector2(0f, 0f);                 //      プレイヤーの現在位置
 
     private Vector2 playerVelocity = new Vector2(0f, 0f);           //      プレイヤーの移動量
 
     private float ranTime = 0f;                                     //      プレイヤーが走り始める時間の管理
+
+    private Vector2 weponDirection = new Vector2(0f,0f);            //      向いている方向
+
+    private Vector2 weponMove = new Vector2(0f,0f);                 //      武器使用時の移動
+
+    private bool atkChack = false;                                  //      攻撃をしているかどうか
+
+    private bool stopPlayer = false;                                //      プレイヤーのストップ
+
+    private bool dash = false;                                      //      ダッシュをしているかどうか
+
+    private float dashLength = 0f;                                  //      ダッシュの距離
+
+    private float dashCoolTime = 0f;                                //      ダッシュのクールタイム
 
     //      システム系
     private Animator animator;
@@ -30,10 +44,17 @@ public class PlayerMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            dash = true;
+        }
     }
 
+<<<<<<< HEAD
     private void FixedUpdate() 
+=======
+    private void FixedUpdate()
+>>>>>>> player
     {
         Move();
     }
@@ -44,19 +65,27 @@ public class PlayerMoveScript : MonoBehaviour
         //      Velocityの初期化
         playerVelocity = new Vector2(0f, 0f);
 
-        //      入力を受け取る
-        playerVelocity.x = Input.GetAxisRaw("Horizontal");
-        playerVelocity.y = Input.GetAxisRaw("Vertical");
+        if (!stopPlayer)
+        if (!atkChack)
+        {
+            //      入力を受け取る
+            playerVelocity.x = Input.GetAxisRaw("Horizontal");
+            playerVelocity.y = Input.GetAxisRaw("Vertical");
+        }
 
         //      移動量の正規化
         var length = Mathf.Sqrt(playerVelocity.x * playerVelocity.x +
                             playerVelocity.y * playerVelocity.y);
+
 
         //      移動量が０以上の時処理する
         if (length > 0)
         {
             playerVelocity.x /= length;
             playerVelocity.y /= length;
+
+            //      プレイヤーの向いている方向を手に入れる
+            weponDirection = playerVelocity;
         }
 
         PlayerMoveAnimation();
@@ -65,8 +94,20 @@ public class PlayerMoveScript : MonoBehaviour
 
         playerPos = playerVelocity;
 
-        //      プレイヤーの現在位置を変更する
-        rd.velocity = playerPos;
+        //      武器で攻撃しているときの移動処理
+        if (atkChack)
+        {
+            SordNomalAtkMove();
+        }
+        else
+        {
+            //      プレイヤーの現在位置を変更する
+            rd.velocity = playerPos;
+
+            Avoidance();
+        }
+
+        Avoidance();
     }
 
     //      歩きか走りかの判定
@@ -147,11 +188,84 @@ public class PlayerMoveScript : MonoBehaviour
     {
         animator.SetBool("Behind", false);
         animator.SetBool("Before", false);
-        animator.SetBool("Right",  false);
-        animator.SetBool("Left",   false);
+        animator.SetBool("Right", false);
+        animator.SetBool("Left", false);
     }
 
+<<<<<<< HEAD
     private void AtkAnimaTest()
     {
     }
 }
+=======
+
+    public Vector2 GetWeponDirection()
+    {
+        return weponDirection;
+    }
+
+    //      剣で攻撃したときのプレイヤーの移動処理
+    private void SordNomalAtkMove()
+    {
+        weponMove = weponDirection;
+        float length = Mathf.Sqrt(weponDirection.x * weponDirection.x +
+                                    weponDirection.y * weponDirection.y);
+
+        if (length > 0)weponMove /= length;
+
+        weponMove *= 2.0f;
+
+        rd.velocity = weponMove;
+    }
+
+    //      スキルで攻撃したかどうか
+    public void SetNomalAtkJadgement(bool i)
+    {
+        atkChack = i;
+    }
+
+    //      移動を止める
+    public void SetStopPlayer(bool i)
+    {
+        stopPlayer = i;
+    }
+
+    //      ダッシュ中の処理
+    private void Avoidance()
+    {
+        //      クールタイム
+        if (dashCoolTime > 0)
+        {
+            dashCoolTime -= Time.deltaTime;
+            return;
+        }
+
+        if (!dash) return;
+
+        Vector2 avoidance = weponDirection;
+
+        if (dashLength > 400.0f)
+        {
+            dash = false;
+            avoidance = new Vector2(0f, 0f);
+            dashLength = 0f;
+            dashCoolTime = 0.5f;
+            return;
+        }
+
+        float speed = 30.0f;
+
+        avoidance *= speed;
+
+        rd.velocity = avoidance;
+
+        dashLength += Mathf.Sqrt(avoidance.x * avoidance.x + avoidance.y * avoidance.y);
+
+    }
+
+    public bool AvoidanceJadgement()
+    {
+        return dash;
+    }
+}
+>>>>>>> player

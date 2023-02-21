@@ -1,15 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CSVProcessing : MonoBehaviour
 {
-    //      ¦ƒAƒZƒbƒgCSVSERIALIZER‚ª•K—vƒfƒX
+    //      â€»ã‚¢ã‚»ãƒƒãƒˆCSVSERIALIZERãŒå¿…è¦ãƒ‡ã‚¹
 
-    //      ƒ‚ƒ“ƒXƒ^[‚ÌƒXƒe[ƒ^ƒX
+    //      ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
     public MonsterData[] monsterData;
 
-    //      ƒvƒŒƒCƒ„[‚Ì•Ší‚ÌƒXƒe[ƒ^ƒX
+    //      ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­¦å™¨ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
     public PlayerWeapon[] playerWeapons;
 
     public ItemManager itemManager;
@@ -17,51 +17,88 @@ public class CSVProcessing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //      ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚ğs‚Á‚ÄŒJ‚ê‚éƒNƒ‰ƒX
+        //      ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã‚’è¡Œã£ã¦ç¹°ã‚Œã‚‹ã‚¯ãƒ©ã‚¹
         TextAsset textasset = new TextAsset();
 
-        //      ƒ‚ƒ“ƒXƒ^[‚ÌƒXƒe[ƒ^ƒX‚ğCSV‚©‚çó‚¯‚Æ‚é
+        //      ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’CSVã‹ã‚‰å—ã‘ã¨ã‚‹
         EnemyStatas(textasset);
 
-        //      ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚ğs‚Á‚ÄŒJ‚ê‚éƒNƒ‰ƒX
+        //      ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã‚’è¡Œã£ã¦ç¹°ã‚Œã‚‹ã‚¯ãƒ©ã‚¹
         TextAsset textasse = new TextAsset();
 
-        //      •Ší‚ÌƒXƒe[ƒ^ƒX‚ğCSV‚©‚çó‚¯æ‚é
+        //      æ­¦å™¨ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’CSVã‹ã‚‰å—ã‘å–ã‚‹
         PlayerWeapon(textasset);
 
+<<<<<<< HEAD
         itemManager.GetComponent<ItemManager>();
+=======
+            int i = itemManager.GetItemNumber();
+
+            itemManager.GetItem(playerWeapons[i].name, playerWeapons[i].Basic,
+                        playerWeapons[i].atk, playerWeapons[i].def, playerWeapons[i].critical, Skill(i));
+>>>>>>> player
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
 
 
         //      ƒAƒCƒeƒ€‚Ì‰Šú’l‚ğó‚¯æ‚é
+=======
+        //      ã‚¢ã‚¤ãƒ†ãƒ ã®æƒ…å ±ã‚’å—ã‘å–ã‚‹
+>>>>>>> player
         if (itemManager.GetItemNumber() != -1)
         {
             int i = itemManager.GetItemNumber();
 
             itemManager.GetItem(playerWeapons[i].name, playerWeapons[i].Basic,
+<<<<<<< HEAD
                         playerWeapons[i].atk, playerWeapons[i].def, playerWeapons[i].critical);
         }
+=======
+                        playerWeapons[i].atk, playerWeapons[i].def, playerWeapons[i].critical, Skill(i));
+        }
+
+    }
+
+    private int Skill(int i)
+    {
+        int skill = 0;
+
+        if (i < 5)
+        {
+            skill = 1;
+            //      å‰£ã®ã‚¹ã‚­ãƒ«
+            return skill;    
+        }
+        else if (i < 10)
+        {
+            skill = 6;
+            //      å¼“ã®ã‚¹ã‚­ãƒ«
+            return skill;
+        }
+
+        return 0;
+>>>>>>> player
     }
 
     private void EnemyStatas(TextAsset textasset)
     {
-        //      ƒtƒ@ƒCƒ‹‚ğ’T‚µ‚»‚Ì’†‚ÌCSV‚ğ“Ç‚İ‚Ş
+        //      ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¢ã—ãã®ä¸­ã®CSVã‚’èª­ã¿è¾¼ã‚€
         textasset = Resources.Load("jabu", typeof(TextAsset)) as TextAsset;
 
-        //      CSVƒtƒ@ƒCƒ‹‚ğ”z—ñ‚É“ü‚ê‚é
+        //      CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’é…åˆ—ã«å…¥ã‚Œã‚‹
         monsterData = CSVSerializer.Deserialize<MonsterData>(textasset.text);
     }
 
     private void PlayerWeapon(TextAsset textasset)
     {
-        //      ƒtƒ@ƒCƒ‹‚ğ’T‚µ‚»‚Ì’†‚ÌCSV‚ğ“Ç‚İ‚Ş
+        //      ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ¢ã—ãã®ä¸­ã®CSVã‚’èª­ã¿è¾¼ã‚€
         textasset = Resources.Load("weapon", typeof(TextAsset)) as TextAsset;
 
-        //      CSVƒtƒ@ƒCƒ‹‚ğ”z—ñ‚É“ü‚ê‚é
+        //      CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’é…åˆ—ã«å…¥ã‚Œã‚‹
         playerWeapons = CSVSerializer.Deserialize<PlayerWeapon>(textasset.text);
     }
 }
