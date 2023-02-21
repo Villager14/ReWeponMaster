@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatas : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     private int playerRank = 1;
 
@@ -33,8 +33,6 @@ public class PlayerStatas : MonoBehaviour
         }
 
         //      プレイヤーのステータスを送る
-        playerATK.SetStatas(playerRank, playerAtk, playerCritical);
+        playerATK.SetStatas(playerRank, playerAtk, playerCritical, playerDef);
     }
-
-
 }

@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerAtk : MonoBehaviour
 {
     public ItemManager itemManager;
+    public WeponMotion WeponMotion;
+
+    [SerializeField] StatasUIScript statasUIScript;
 
     private int wepon1;                     //      武器１
     private int wepon2;                     //      武器２
@@ -25,7 +28,16 @@ public class PlayerAtk : MonoBehaviour
 
     private float totalCritical = 0f;       //      合計の会心率
 
+    private float weponDefense = 0f;        //      武器の防御力
+    private float playerDefence = 0f;       //      プレイヤーの防御力
+
+    private float totalDefence = 0f;        //      総合防御力
+
     private int playerLevel = 0;
+
+    private float skillMagnification = 0;
+
+    private bool a = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,21 +47,48 @@ public class PlayerAtk : MonoBehaviour
         wepon2 = 1;
 
         itemManager.GetComponent<ItemManager>();
+        WeponMotion.GetComponent<WeponMotion>();
+        statasUIScript.GetComponent<StatasUIScript>();
+
+        nowWepon = wepon1;
+
+        itemManager.SetWeponNumber(0);
+
+        weponAtk = itemManager.NowItemATK(nowWepon);
+        nowWeponName = itemManager.NowItemName(nowWepon);
+        weponCritical = itemManager.NowItemCritical(nowWepon);
+        weponDefense = itemManager.NowItemDefense(nowWepon);
     }
 
     // Update is called once per frame
     void Update()
     {
-
         //      合計の攻撃力
         totalAtk = weponAtk + playerAtk;
 
         //      合計のクリティカル率
         totalCritical = weponCritical + playerCritical;
 
+        totalDefence = weponDefense + playerDefence;
+
         Atack();
 
+        SkillDamage();
+
         WeponChange();
+
+        WeponAtk();
+
+        if (a == false)
+        {
+            itemManager.SetWeponNumber(7);
+            a = true;
+        }
+
+        //      武器の配列番号
+        statasUIScript.SetWepon(wepon1, wepon2);
+
+        //Debug.Log(nowWeponName);
     }
 
     private void Atack()
@@ -62,15 +101,33 @@ public class PlayerAtk : MonoBehaviour
         }
     }
 
-    //public void ItemGet()
-    //{
+    private void SkillDamage()
+    {
+        if (skillMagnification != 0)
+        {
+            totalAtk *= skillMagnification;
 
-    //}
+            int number = Random.Range(0, 100);
+
+            if (number < totalCritical) totalAtk *= 2f;
+        }
+    }
+
 
     public float GetAtack()
     {
         return totalAtk;
     }
+
+    public float GetDefence()
+    {
+        return totalDefence;
+    }
+    public float GetCritical()
+    {
+        return totalCritical;
+    }
+
 
     public int GetPlayerLevel()
     {
@@ -82,7 +139,6 @@ public class PlayerAtk : MonoBehaviour
         //      武器の交換処理
         if (Input.GetKeyDown(KeyCode.C))
         {
-
             if (weponChange)
             {
                 //      武器１
@@ -102,6 +158,7 @@ public class PlayerAtk : MonoBehaviour
                 weponAtk = itemManager.NowItemATK(nowWepon);
                 nowWeponName = itemManager.NowItemName(nowWepon);
                 weponCritical = itemManager.NowItemCritical(nowWepon);
+                weponDefense = itemManager.NowItemDefense(nowWepon);
             }
         }
     }
@@ -113,7 +170,7 @@ public class PlayerAtk : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                itemManager.SetWeponNumber(2);
+                itemManager.SetWeponNumber(7);
 
                 Destroy(collision.gameObject);
             }
@@ -121,26 +178,29 @@ public class PlayerAtk : MonoBehaviour
     }
 
     //      アイテムの情報を受け取る
-    public void SetStatas(int playerLevel, float playerAtk, float playerCritical)
+    public void SetStatas(int playerLevel, float playerAtk, float playerCritical, float playerDefence)
     {
         this.playerLevel = playerLevel;
         this.playerAtk = playerAtk;
         this.playerCritical = playerCritical;
+        this.playerDefence = playerDefence;
     }
 
     private void WeponAtk()
     {
-        int itemNumber = itemManager.GetWeponNumber(1);
+        int itemNumber = itemManager.GetWeponNumber(nowWepon);
 
         if (itemNumber < 5)
         {
             //      剣
-
-            SordMotion();
+            WeponMotion.Sord();
+           
         }
         else if (itemNumber < 10)
         {
             //      弓
+            WeponMotion.Bow();
+            
         }
         else if (itemNumber < 15)
         {
@@ -160,11 +220,18 @@ public class PlayerAtk : MonoBehaviour
         }
     }
 
-    private void SordMotion()
+    public float GetDamage()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        return totalAtk;
+    }
 
-        }
+    public void GetSkill(float i)
+    {
+        skillMagnification = i;
+    }
+
+    public int GetSkill(int i)
+    {
+        return itemManager.GetSkill(i);
     }
 }

@@ -7,8 +7,9 @@ using UnityEngine;
     public class PlayerWeapon
     {
         public string name;         //      –¼‘O
-        public int atk;             //      UŒ‚—Í
-        public int def;             //      –hŒä—Í
-        public int critical;        //      ƒNƒŠƒeƒBƒJƒ‹—¦
+        public float Basic;         //      Šî‘bUŒ‚—Í
+        public float atk;             //      UŒ‚—Í
+        public float def;             //      –hŒä—Í
+        public float critical;        //      ƒNƒŠƒeƒBƒJƒ‹—¦
     }
 
